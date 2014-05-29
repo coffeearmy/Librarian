@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 
+import com.coffeearmy.librarian.events.OnSuccessAuthorization;
+import com.coffeearmy.librarian.events.OttoBusHelper;
 import com.coffeearmy.librarian.fragments.EbookListFragment;
 import com.coffeearmy.librarian.fragments.LoginFragment;
 import com.dropbox.client2.DropboxAPI;
@@ -61,6 +63,8 @@ public class MainActivity extends ActionBarActivity {
 	            mDBApi.getSession().finishAuthentication();
 
 	            String accessToken = mDBApi.getSession().getOAuth2AccessToken();
+	            ///TODO retrieve the metadata with Retrofit and dont have to pass 
+	            OttoBusHelper.getCurrentBus().post(new OnSuccessAuthorization(OnSuccessAuthorization.Type.SUCCESS, mDBApi));
 	        } catch (IllegalStateException e) {
 	            Log.i("DbAuthLog", "Error authenticating", e);
 	        }
