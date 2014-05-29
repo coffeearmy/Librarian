@@ -5,5 +5,13 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
+    <item
+        android:id="@+id/orderMenu"
+        android:icon="@drawable/ic_action_settings" android:title="@string/label_menu_order" android:showAsAction="always" android:visible="true">
+        <menu>
+            <item android:id="@+id/menuOrderAZ" android:title="@string/label_menu_order_az"/>
+            <item android:id="@+id/menuOrderDate" android:title="@string/label_menu_order_date"/>
+        </menu>
+    </item>
 
 </menu>

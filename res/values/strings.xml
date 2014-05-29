@@ -4,5 +4,11 @@
     <string name="app_name">Librarian</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="label_menu_order_az">Order A-Z</string>
+    <string name="label_menu_order_date">Order by date</string>
+    <string name="label_menu_order">Order items</string>
+    <string name="decor_lbl_username">DROPBOX\'s USERNAME</string>
+    <string name="decor_lbl_password">DROPBOX\'s PASSWORD:</string>
+    <string name="btn_login">Login</string>
 
 </resources>
