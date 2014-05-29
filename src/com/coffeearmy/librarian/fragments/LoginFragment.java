@@ -14,12 +14,14 @@ import android.widget.Toast;
 
 import com.coffeearmy.librarian.R;
 
+
 /**
  * Fragment for login in the user Dropbox account.
  */
 public class LoginFragment extends Fragment {
 
 	public static final String FRAGMENT_TAG = "loging_fragment";
+
 	private EditText mEdtUsername;
 	private EditText mEdtPass;
 	private Button btnLogin;
@@ -47,7 +49,6 @@ public class LoginFragment extends Fragment {
 				Toast.makeText(getActivity(), "Fill all fields",
 						Toast.LENGTH_SHORT).show();
 			}
-
 		}
 	}
 
@@ -70,6 +71,8 @@ public class LoginFragment extends Fragment {
 
 	/** Method for begin the login if everything is OK */
 	private void beginLogin(String string, String string2) {
+//		OAuthResponse apiCall= new OAuthResponse();
+//		String response=apiCall.beginAuthentification();
 		// For now
 		Boolean loginOK = true;
 		if (loginOK) {
