@@ -1,5 +1,6 @@
 package com.coffeearmy.librarian.fragments;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.coffeearmy.librarian.R;
+import com.coffeearmy.librarian.adapters.EpubListAdapter;
 import com.coffeearmy.librarian.events.OnSuccessAuthorization;
 import com.coffeearmy.librarian.events.OttoBusHelper;
 import com.coffeearmy.librarian.rest.EpubLoader;
@@ -25,33 +28,27 @@ public class EbookListFragment extends Fragment implements
 	public static final String FRAGMENT_TAG = "ebook_fragment";
 	private static final int LOADER_EPUB_ID = 0;
 	private DropboxAPI<AndroidAuthSession> mDropboxAPI;
+	private EpubListAdapter mAdapterList;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setHasOptionsMenu(true);
+		OttoBusHelper.getCurrentBus().register(this);
 		super.onCreate(savedInstanceState);
 	}
 
-	@Override
-	public void onResume() {
-		OttoBusHelper.getCurrentBus().register(this);
-		super.onResume();
-	}
 
-	@Override
-	public void onPause() {
-		OttoBusHelper.getCurrentBus().unregister(this);
-		super.onPause();
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		ListView listEpubs = new ListView(getActivity());
-
-		return super.onCreateView(inflater, container, savedInstanceState);
+		mAdapterList= new EpubListAdapter(getActivity(), R.layout.item_epub_list, new ArrayList<DropboxAPI.Entry>());
+		listEpubs.setAdapter(mAdapterList);
+		return listEpubs;
 	}
 	
+	/** Is subscribed to the event bus waiting for the onFinishAutentification event to occur*/
 	@Subscribe
 	public void onFinishAuthentification(OnSuccessAuthorization event){
 		if(event.getType()==OnSuccessAuthorization.Type.SUCCESS){
@@ -68,13 +65,13 @@ public class EbookListFragment extends Fragment implements
 
 	@Override
 	public void onLoadFinished(Loader<List<Entry>> arg0, List<Entry> arg1) {
-		//mAdapterList.changeDataSet(arg1);
+		mAdapterList.changeDataSet((ArrayList<Entry>) arg1);
 
 	}
 
 	@Override
 	public void onLoaderReset(Loader<List<Entry>> arg0) {
-	//	mAdapterList.changeDataSet(new ArrayList<Entry>());
+		mAdapterList.changeDataSet(new ArrayList<Entry>());
 
 	}
 
