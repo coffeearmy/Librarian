@@ -32,7 +32,7 @@ public class MainActivity extends ActionBarActivity {
 		mFragManager = getSupportFragmentManager();
 		mFragManager
 				.beginTransaction()
-				.replace(R.id.fragment_container, new PromptDropboxLoginFragment(),
+				.replace(R.id.fragment_container, PromptDropboxLoginFragment.getInstance(),
 						PromptDropboxLoginFragment.FRAGMENT_TAG).commit();
 
 	}

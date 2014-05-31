@@ -19,6 +19,7 @@ import com.dropbox.client2.session.Session.AccessType;
 
 public class PromptDropboxLoginFragment extends Fragment {
 	private static DropboxAPI<AndroidAuthSession> mDBApi;
+	private static Fragment mPrompFrag;
 	final static private String APP_KEY = "l8bdlkx9jy53ow0";
 	final static private String APP_SECRET = "h3o4hidwfj0e36a";
 	final static private AccessType ACCESS_TYPE = AccessType.DROPBOX;
@@ -29,6 +30,12 @@ public class PromptDropboxLoginFragment extends Fragment {
 
 	private Button mBtnPromptLogin;
 
+	public static Fragment getInstance() {
+		if(mPrompFrag==null){
+			mPrompFrag=new PromptDropboxLoginFragment();
+		}
+		return mPrompFrag;
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -133,8 +140,10 @@ public class PromptDropboxLoginFragment extends Fragment {
 	private void navigateToList() {
 		FragmentManager fm = getActivity().getSupportFragmentManager();
 		fm.beginTransaction()
-				.replace(R.id.fragment_container, new EbookGridFragment(),
-						EbookGridFragment.FRAGMENT_TAG).addToBackStack(null)
+				.replace(R.id.fragment_container, EbookGridFragment.getInstance(),
+						EbookGridFragment.FRAGMENT_TAG)
 				.commit();
 	}
+
+	
 }

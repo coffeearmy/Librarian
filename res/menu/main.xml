@@ -21,6 +21,7 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
+        yourapp:showAsAction="never"
         android:title="@string/action_menu_logout"/>
 
 </menu>

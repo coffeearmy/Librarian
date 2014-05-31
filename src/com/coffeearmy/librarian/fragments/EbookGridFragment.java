@@ -33,9 +33,17 @@ public class EbookGridFragment extends Fragment implements
 
 	public static final String FRAGMENT_TAG = "ebook_grid_fragment";
 	private static final int LOADER_EPUB_ID = 0;
+	private static EbookGridFragment mEbookGrid;
 	private DropboxAPI<AndroidAuthSession> mDropboxAPI;
 	private EpubListAdapter mAdapterList;
 	private ArrayList<EPubData> mEPubList;
+
+	public static EbookGridFragment getInstance() {
+		if (mEbookGrid == null) {
+			mEbookGrid = new EbookGridFragment();
+		}
+		return mEbookGrid;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -115,7 +123,12 @@ public class EbookGridFragment extends Fragment implements
 		case R.id.action_settings:
 			clearKeys();
 			PromptDropboxLoginFragment.logOutDropbox();
-			getActivity().getSupportFragmentManager().popBackStack();
+			getActivity()
+					.getSupportFragmentManager()
+					.beginTransaction()
+					.replace(R.id.fragment_container,
+							PromptDropboxLoginFragment.getInstance(),
+							PromptDropboxLoginFragment.FRAGMENT_TAG).commit();
 		}
 		return super.onOptionsItemSelected(item);
 	}
