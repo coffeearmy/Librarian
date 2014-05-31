@@ -11,6 +11,7 @@ import com.dropbox.client2.session.Session.AccessType;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ public class PromptDropboxLoginFragment extends Fragment{
 			Bundle savedInstanceState) {
 		View promptView= inflater.inflate(R.layout.prompt_dropbox_login, null);
 		mBtnPromptLogin= (Button) promptView.findViewById(R.id.btnLoginDropbox);
+		mBtnPromptLogin.setOnClickListener(new OnClickPromptLogin());
 		return promptView;
 	}
 	
@@ -48,22 +50,46 @@ public class PromptDropboxLoginFragment extends Fragment{
 	@Override
 	public void onResume() {
 	    super.onResume();
+	    loginLogic();    
+	}
+	
+	public static  DropboxAPI<AndroidAuthSession> getAPIDropbox(){
+		return mDBApi;
+	}
+	
+	protected class OnClickPromptLogin implements View.OnClickListener{
 
-	    if (mDBApi.getSession().authenticationSuccessful()) {
+		@Override
+		public void onClick(View v) {
+			mDBApi.getSession().startOAuth2Authentication(getActivity());				
+		}
+		
+	}
+	
+	
+	private void loginLogic(){
+		if (mDBApi.getSession().authenticationSuccessful()) {
 	        try {
 	            // Required to complete auth, sets the access token on the session
 	            mDBApi.getSession().finishAuthentication();
 
 	            String accessToken = mDBApi.getSession().getOAuth2AccessToken();
-	            ///TODO retrieve the metadata with Retrofit and dont have to pass 
-	            OttoBusHelper.getCurrentBus().post(new OnSuccessAuthorization(OnSuccessAuthorization.Type.SUCCESS, mDBApi));
+	            successLogin();
 	        } catch (IllegalStateException e) {
 	            Log.i("DbAuthLog", "Error authenticating", e);
 	        }
 	    }
 	}
-	
-	public static  DropboxAPI<AndroidAuthSession> getAPIDropbox(){
-		return mDBApi;
+
+	private void successLogin() {
+		navigateToList();
+		//OttoBusHelper.getCurrentBus().post(new OnSuccessAuthorization(OnSuccessAuthorization.Type.SUCCESS, mDBApi));
+	}
+
+	private void navigateToList() {
+		FragmentManager fm = getActivity().getSupportFragmentManager();
+		fm.beginTransaction()
+				.replace(R.id.fragment_container, new EbookGridFragment(),
+						EbookGridFragment.FRAGMENT_TAG).commit();
 	}
 }
