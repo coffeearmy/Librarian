@@ -175,7 +175,12 @@ public class EpubListAdapter extends ArrayAdapter<EPubData> {
 					epub.setCover(BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ic_launcher));
 			}
 			
-			epub.setTitle(epubBook.getTitle().equals("")?epub.getFileName():epubBook.getTitle());
+			try {
+				epub.setTitle(epubBook.getTitle().equals("")?epub.getFileName():epubBook.getTitle());
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
 
 			return viewHolder;
 		}

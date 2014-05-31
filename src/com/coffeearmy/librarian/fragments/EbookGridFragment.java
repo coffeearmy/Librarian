@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -110,8 +112,19 @@ public class EbookGridFragment extends Fragment implements
 				mAdapterList.changeDataSet(mEPubList);
 			}
 			break;
+		case R.id.action_settings:
+			clearKeys();
+			PromptDropboxLoginFragment.logOutDropbox();
+			getActivity().getSupportFragmentManager().popBackStack();
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
+	private void clearKeys() {
+		SharedPreferences prefs = getActivity().getSharedPreferences(
+				PromptDropboxLoginFragment.ACCOUNT_PREFS_NAME, 0);
+		Editor edit = prefs.edit();
+		edit.clear();
+		edit.commit();
+	}
 }
