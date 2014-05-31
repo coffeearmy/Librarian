@@ -1,16 +1,20 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+     xmlns:yourapp="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
-    <item
         android:id="@+id/orderMenu"
-        android:icon="@drawable/ic_action_settings" android:title="@string/label_menu_order" android:showAsAction="always" android:visible="true">
+        android:icon="@drawable/ic_action_settings"
+        android:showAsAction="ifRoom"
+        yourapp:showAsAction="ifRoom"
+        android:title="@string/label_menu_order"
+       >
         <menu>
-            <item android:id="@+id/menuOrderAZ" android:title="@string/label_menu_order_az"/>
-            <item android:id="@+id/menuOrderDate" android:title="@string/label_menu_order_date"/>
+            <item
+                android:id="@+id/menuOrderAZ"
+                android:title="@string/label_menu_order_az"/>
+            <item
+                android:id="@+id/menuOrderDate"
+                android:title="@string/label_menu_order_date"/>
         </menu>
     </item>
 

@@ -94,6 +94,7 @@ public class EpubListAdapter extends ArrayAdapter<EPubData> {
 		EPubData ePub = mItemList.get(position);
 		holder.setePub(ePub);
 		holder.titleEPub.setText(ePub.getFileName());
+		holder.dateEpub.setText(ePub.getDate().toLocaleString());
 		holder.imgEPub.setTag(position);
 		if (ePub.isEPubMetadataLoaded()) {
 			holder.titleEPub.setText(ePub.getTitle());
@@ -186,4 +187,5 @@ public class EpubListAdapter extends ArrayAdapter<EPubData> {
 		ImageDialog.getInstance(mItemList.get(tag).getCover()).show(fm, ImageDialog.FRAGMENT_TAG);
 	}
 
+	
 }

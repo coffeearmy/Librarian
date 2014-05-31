@@ -1,12 +1,15 @@
 package com.coffeearmy.librarian.data;
 
-import java.util.Calendar;
-
-import com.dropbox.client2.DropboxAPI.Entry;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
-import nl.siegmann.epublib.domain.Date;
+
+import com.dropbox.client2.DropboxAPI.Entry;
+
 
 /** Class used to store all the ePub fields */
 public class EPubData {
@@ -26,8 +29,7 @@ public class EPubData {
 		this.fileName=entry.fileName();
 		this.path=entry.path;
 		this.title="NOTYET";
-		
-		//this.date=entry.clientMtime();
+		this.date= dateToString(entry.clientMtime);	
 	}
 	/**
 	 * @return the title
@@ -97,4 +99,49 @@ public class EPubData {
 	public Bitmap getThumbnail(){
 		return ThumbnailUtils.extractThumbnail(cover, THUMBSIZE_WIDTH, THUMBSIZE_HEIGHT);
 	}
+	
+	private Date dateToString(String d){
+		//Dropbox format : "Sat, 21 Aug 2010 22:31:20 +0000"
+		Date dateParse=null;
+		SimpleDateFormat  format = new SimpleDateFormat("E, d MMM yyyy HH:mm:ss Z");  
+		try {  
+		    dateParse = format.parse(d);  
+		    System.out.println(date);  
+		} catch (ParseException e) {  
+		    // TODO Auto-generated catch block  
+		    e.printStackTrace();  
+		}
+		return dateParse;
+	}
+	
+	public static Comparator<EPubData> EPubDataNameComparator = new Comparator<EPubData>() {
+
+		public int compare(EPubData ePub1, EPubData ePub2) {
+
+			String ePubName1 = ePub1.getTitle().toUpperCase();
+			String ePubName2 = ePub2.getTitle().toUpperCase();
+
+			// ascending order
+			return ePubName1.compareTo(ePubName2);
+
+			// descending order
+			// return ePubName2.compareTo(ePubName1);
+		}
+
+	};
+	public static Comparator<EPubData> EPubDataDateComparator = new Comparator<EPubData>() {
+
+		public int compare(EPubData ePubData1, EPubData ePubData2) {
+
+			Date ePubDate1 = ePubData1.getDate();
+			Date ePubDate2 = ePubData2.getDate();
+
+			// ascending order
+			return ePubDate1.compareTo(ePubDate2);
+
+			// descending order
+			// return ePubDate2.compareTo(ePubDate1);
+		}
+
+	};
 }

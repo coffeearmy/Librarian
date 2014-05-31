@@ -1,6 +1,7 @@
 package com.coffeearmy.librarian.fragments;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -31,6 +33,7 @@ public class EbookGridFragment extends Fragment implements
 	private static final int LOADER_EPUB_ID = 0;
 	private DropboxAPI<AndroidAuthSession> mDropboxAPI;
 	private EpubListAdapter mAdapterList;
+	private ArrayList<EPubData> mEPubList;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -38,44 +41,51 @@ public class EbookGridFragment extends Fragment implements
 		OttoBusHelper.getCurrentBus().register(this);
 		super.onCreate(savedInstanceState);
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View gridEpubView = (View) inflater.inflate(R.layout.grid_view_epubs, null);
+		View gridEpubView = (View) inflater.inflate(R.layout.grid_view_epubs,
+				null);
 		GridView gridEpub = (GridView) gridEpubView.findViewById(R.id.gridview);
-
-		mAdapterList= new EpubListAdapter(getActivity(), R.layout.item_epub_grid, new ArrayList<EPubData>());
+		mEPubList = new ArrayList<EPubData>();
+		mAdapterList = new EpubListAdapter(getActivity(),
+				R.layout.item_epub_grid, mEPubList);
 		gridEpub.setAdapter(mAdapterList);
 
-		mDropboxAPI=PromptDropboxLoginFragment.getAPIDropbox();
+		mDropboxAPI = PromptDropboxLoginFragment.getAPIDropbox();
 		getLoaderManager().initLoader(LOADER_EPUB_ID, null, this).forceLoad();
 		return gridEpubView;
 	}
-	
-	/** Is subscribed to the event bus waiting for the onFinishAutentification event to occur*/
+
+	/**
+	 * Is subscribed to the event bus waiting for the onFinishAutentification
+	 * event to occur
+	 */
 	@Subscribe
-	public void onFinishAuthentification(OnSuccessAuthorization event){
-		if(event.getType()==OnSuccessAuthorization.Type.SUCCESS){
-			mDropboxAPI=PromptDropboxLoginFragment.getAPIDropbox();
-			getLoaderManager().initLoader(LOADER_EPUB_ID, null, this).forceLoad();
+	public void onFinishAuthentification(OnSuccessAuthorization event) {
+		if (event.getType() == OnSuccessAuthorization.Type.SUCCESS) {
+			mDropboxAPI = PromptDropboxLoginFragment.getAPIDropbox();
+			getLoaderManager().initLoader(LOADER_EPUB_ID, null, this)
+					.forceLoad();
 		}
 	}
-	
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 	}
-	
-	//*** LOADER METHODS ****//
+
+	// *** LOADER METHODS ****//
 	@Override
 	public Loader<List<EPubData>> onCreateLoader(int arg0, Bundle arg1) {
-		return new EpubLoader(getActivity(),mDropboxAPI);
+		return new EpubLoader(getActivity(), mDropboxAPI);
 	}
 
 	@Override
 	public void onLoadFinished(Loader<List<EPubData>> arg0, List<EPubData> arg1) {
-		mAdapterList.changeDataSet((ArrayList<EPubData>) arg1);
+		mEPubList = (ArrayList<EPubData>) arg1;
+		mAdapterList.changeDataSet(mEPubList);
 
 	}
 
@@ -84,7 +94,24 @@ public class EbookGridFragment extends Fragment implements
 		mAdapterList.changeDataSet(new ArrayList<EPubData>());
 
 	}
-	
-	
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menuOrderAZ:
+			if (mEPubList != null) {
+				Collections.sort(mEPubList, EPubData.EPubDataNameComparator);
+				mAdapterList.changeDataSet(mEPubList);
+			}
+			break;
+		case R.id.menuOrderDate:
+			if (mEPubList != null) {
+				Collections.sort(mEPubList, EPubData.EPubDataDateComparator);
+				mAdapterList.changeDataSet(mEPubList);
+			}
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 }
