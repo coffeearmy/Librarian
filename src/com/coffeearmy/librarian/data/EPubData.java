@@ -5,10 +5,15 @@ import java.util.Calendar;
 import com.dropbox.client2.DropboxAPI.Entry;
 
 import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import nl.siegmann.epublib.domain.Date;
 
 /** Class used to store all the ePub fields */
 public class EPubData {
+
+	private static final int THUMBSIZE_HEIGHT = 100;
+	private static final int THUMBSIZE_WIDTH = 60;
+	
 	String title;
 	String fileName;
 	String path;
@@ -87,5 +92,9 @@ public class EPubData {
 	
 	public boolean isEPubMetadataLoaded() {
 		return cover==null?false:true;
+	}
+	
+	public Bitmap getThumbnail(){
+		return ThumbnailUtils.extractThumbnail(cover, THUMBSIZE_WIDTH, THUMBSIZE_HEIGHT);
 	}
 }
