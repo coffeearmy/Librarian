@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.coffeearmy.librarian.MainActivity;
 import com.coffeearmy.librarian.R;
 import com.coffeearmy.librarian.data.EPubData;
+import com.coffeearmy.librarian.fragments.PromptDropboxLoginFragment;
 import com.dropbox.client2.DropboxAPI.DropboxFileInfo;
 import com.dropbox.client2.exception.DropboxException;
 
@@ -129,7 +130,7 @@ public class EpubListAdapter extends ArrayAdapter<EPubData> {
 				FileOutputStream outputStream;
 				try {
 					outputStream = new FileOutputStream(file);
-					DropboxFileInfo info = MainActivity.getAPIDropbox().getFile(epub.getPath(), null, outputStream, null);
+					DropboxFileInfo info = PromptDropboxLoginFragment.getAPIDropbox().getFile(epub.getPath(), null, outputStream, null);
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -10,5 +10,6 @@
     <string name="decor_lbl_username">DROPBOX\'s USERNAME</string>
     <string name="decor_lbl_password">DROPBOX\'s PASSWORD:</string>
     <string name="btn_login">Login</string>
+    <string name="btn_login_dropbox">Login in Dropbox</string>
 
 </resources>

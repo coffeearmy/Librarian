@@ -10,6 +10,7 @@ import com.coffeearmy.librarian.events.OnSuccessAuthorization;
 import com.coffeearmy.librarian.events.OttoBusHelper;
 import com.coffeearmy.librarian.fragments.EbookListFragment;
 import com.coffeearmy.librarian.fragments.LoginFragment;
+import com.coffeearmy.librarian.fragments.PromptDropboxLoginFragment;
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.session.AppKeyPair;
@@ -18,23 +19,12 @@ import com.dropbox.client2.session.Session.AccessType;
 public class MainActivity extends ActionBarActivity {
 
 	private FragmentManager mFragManager;
-	private static DropboxAPI<AndroidAuthSession> mDBApi;
-	final static private String APP_KEY = "l8bdlkx9jy53ow0";
-	final static private String APP_SECRET = "h3o4hidwfj0e36a";
-	final static private AccessType ACCESS_TYPE = AccessType.DROPBOX;
-
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		onCreateFragments();
-		AppKeyPair appKeys = new AppKeyPair(APP_KEY, APP_SECRET);
-		AndroidAuthSession session = new AndroidAuthSession(appKeys, ACCESS_TYPE);
-		mDBApi = new DropboxAPI<AndroidAuthSession>(session);
-		// MyActivity below should be your activity class name
-		mDBApi.getSession().startOAuth2Authentication(MainActivity.this);
 	}
 
 	
@@ -42,8 +32,8 @@ public class MainActivity extends ActionBarActivity {
 		mFragManager = getSupportFragmentManager();
 		mFragManager
 				.beginTransaction()
-				.replace(R.id.fragment_container, new EbookListFragment(),
-						LoginFragment.FRAGMENT_TAG).commit();
+				.replace(R.id.fragment_container, new PromptDropboxLoginFragment(),
+						PromptDropboxLoginFragment.FRAGMENT_TAG).commit();
 
 	}
 
@@ -54,24 +44,4 @@ public class MainActivity extends ActionBarActivity {
 		return true;
 	}
 
-	protected void onResume() {
-	    super.onResume();
-
-	    if (mDBApi.getSession().authenticationSuccessful()) {
-	        try {
-	            // Required to complete auth, sets the access token on the session
-	            mDBApi.getSession().finishAuthentication();
-
-	            String accessToken = mDBApi.getSession().getOAuth2AccessToken();
-	            ///TODO retrieve the metadata with Retrofit and dont have to pass 
-	            OttoBusHelper.getCurrentBus().post(new OnSuccessAuthorization(OnSuccessAuthorization.Type.SUCCESS, mDBApi));
-	        } catch (IllegalStateException e) {
-	            Log.i("DbAuthLog", "Error authenticating", e);
-	        }
-	    }
-	}
-	
-	public static  DropboxAPI<AndroidAuthSession> getAPIDropbox(){
-		return mDBApi;
-	}
 }
