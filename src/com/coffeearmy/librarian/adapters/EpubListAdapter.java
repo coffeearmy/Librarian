@@ -147,19 +147,35 @@ public class EpubListAdapter extends ArrayAdapter<EPubData> {
 				e.printStackTrace();
 			}
 			// 2.Read ePub metada
+			Book epubBook=null;
 			try {
-				Book epubBook = (new EpubReader())
-						.readEpub(new FileInputStream(file));
-				epub.setCover(BitmapFactory.decodeStream(epubBook
-						.getCoverImage().getInputStream()));
-				epub.setTitle(epubBook.getTitle());
+				 epubBook = (new EpubReader())
+						.readEpub(new FileInputStream(file));			
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (Exception e){
+				e.printStackTrace();
 			}
+			
+			try {
+				epub.setCover(BitmapFactory.decodeStream(epubBook
+						.getCoverImage().getInputStream()));
+			} catch (IOException e) {
+				//The ePub dont have cover
+				e.printStackTrace();
+			}catch (NullPointerException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}finally{
+				if(epub.getCover()==null)
+					epub.setCover(BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ic_launcher));
+			}
+			
+			epub.setTitle(epubBook.getTitle().equals("")?epub.getFileName():epubBook.getTitle());
 
 			return viewHolder;
 		}

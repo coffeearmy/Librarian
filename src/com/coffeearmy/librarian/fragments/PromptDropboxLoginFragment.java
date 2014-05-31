@@ -43,8 +43,8 @@ public class PromptDropboxLoginFragment extends Fragment{
 		AppKeyPair appKeys = new AppKeyPair(APP_KEY, APP_SECRET);
 		AndroidAuthSession session = new AndroidAuthSession(appKeys, ACCESS_TYPE);
 		mDBApi = new DropboxAPI<AndroidAuthSession>(session);
-		// MyActivity below should be your activity class name
-		mDBApi.getSession().startOAuth2Authentication(getActivity());
+//		// MyActivity below should be your activity class name
+//		mDBApi.getSession().startOAuth2Authentication(getActivity());
 	}
 
 	@Override
