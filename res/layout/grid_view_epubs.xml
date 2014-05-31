@@ -3,7 +3,10 @@
     android:id="@+id/gridview"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#e5e5e5"
+    android:horizontalSpacing="@dimen/element_margin"
     android:numColumns="auto_fit"
-    android:padding="@dimen/element_margin" >
+    android:padding="@dimen/element_margin"
+    android:verticalSpacing="@dimen/element_margin" >
 
 </GridView>

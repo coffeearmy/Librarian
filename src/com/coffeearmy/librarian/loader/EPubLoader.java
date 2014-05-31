@@ -1,4 +1,4 @@
-package com.coffeearmy.librarian.rest;
+package com.coffeearmy.librarian.loader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +12,11 @@ import com.dropbox.client2.exception.DropboxException;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-public class EpubLoader extends AsyncTaskLoader<List<EPubData>> {
+public class EPubLoader extends AsyncTaskLoader<List<EPubData>> {
 
 	private DropboxAPI<AndroidAuthSession> mDropboxAPI;
 
-	public EpubLoader(Context context, DropboxAPI<AndroidAuthSession> dropboxAPI) {
+	public EPubLoader(Context context, DropboxAPI<AndroidAuthSession> dropboxAPI) {
 		super(context);
 		mDropboxAPI = dropboxAPI;
 

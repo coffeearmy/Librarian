@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.coffeearmy.librarian.MainActivity;
@@ -38,6 +39,7 @@ public class EpubListAdapter extends ArrayAdapter<EPubData> {
 	static class ViewHolder {
 		TextView titleEPub;
 		TextView dateEpub;
+		ProgressBar loadingBar;
 		ImageView imgEPub;
 		EPubData ePub;
 
@@ -65,7 +67,7 @@ public class EpubListAdapter extends ArrayAdapter<EPubData> {
 		this.mContext = context;
 		this.mItemList = mItemList;
 		this.mItemLayout = resource;
-		mGestureDetector = new GestureDetector(context,new GestureListener());
+		mGestureDetector = new GestureDetector(context, new GestureListener());
 
 	}
 
@@ -85,6 +87,8 @@ public class EpubListAdapter extends ArrayAdapter<EPubData> {
 					.findViewById(R.id.imgEbook);
 			viewHolder.dateEpub = (TextView) rowView
 					.findViewById(R.id.txtVDateFile);
+			viewHolder.loadingBar = (ProgressBar) rowView
+					.findViewById(R.id.progBePubLoad);
 			viewHolder.imgEPub.setOnTouchListener(new OnDoubleTap());
 			// Store the viewHolder in the tag of the view
 			rowView.setTag(viewHolder);
@@ -99,12 +103,12 @@ public class EpubListAdapter extends ArrayAdapter<EPubData> {
 		if (ePub.isEPubMetadataLoaded()) {
 			holder.titleEPub.setText(ePub.getTitle());
 			holder.imgEPub.setImageBitmap(ePub.getThumbnail());
-			
+			holder.loadingBar.setVisibility(View.GONE);
+
 		} else {
 			new DownloadEpubAndFillList().execute(holder);
 		}
 		// holder.dateEpub.setText(item.getDate() + "");
-
 
 		return rowView;
 	}
@@ -117,7 +121,7 @@ public class EpubListAdapter extends ArrayAdapter<EPubData> {
 
 	private class DownloadEpubAndFillList extends
 			AsyncTask<ViewHolder, Void, ViewHolder> {
-
+		
 		@Override
 		protected ViewHolder doInBackground(ViewHolder... params) {
 
@@ -165,27 +169,28 @@ public class EpubListAdapter extends ArrayAdapter<EPubData> {
 			EPubData ePub = result.getePub();
 			result.titleEPub.setText(ePub.getTitle());
 			result.imgEPub.setImageBitmap(ePub.getThumbnail());
-			
+			result.loadingBar.setVisibility(View.GONE);
 		}
 
 	}
-	
-	protected class OnDoubleTap implements View.OnTouchListener{
-		
+
+	protected class OnDoubleTap implements View.OnTouchListener {
+
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
-			if(mGestureDetector.onTouchEvent(event)){
-				showCover((Integer)v.getTag());
+			if (mGestureDetector.onTouchEvent(event)) {
+				showCover((Integer) v.getTag());
 			}
 			return false;
-		}		
+		}
 	}
 
 	public void showCover(Integer tag) {
-		FragmentManager fm = ((MainActivity)mContext).getSupportFragmentManager();
-		
-		ImageDialog.getInstance(mItemList.get(tag).getCover()).show(fm, ImageDialog.FRAGMENT_TAG);
+		FragmentManager fm = ((MainActivity) mContext)
+				.getSupportFragmentManager();
+
+		ImageDialog.getInstance(mItemList.get(tag).getCover()).show(fm,
+				ImageDialog.FRAGMENT_TAG);
 	}
 
-	
 }

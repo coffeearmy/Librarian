@@ -16,6 +16,7 @@ public class EPubData {
 
 	private static final int THUMBSIZE_HEIGHT = 100;
 	private static final int THUMBSIZE_WIDTH = 60;
+	protected static final String EMPTY_STRING = "NOTYET";
 	
 	String title;
 	String fileName;
@@ -28,7 +29,7 @@ public class EPubData {
 	public EPubData(Entry entry) {
 		this.fileName=entry.fileName();
 		this.path=entry.path;
-		this.title="NOTYET";
+		this.title=EMPTY_STRING;
 		this.date= dateToString(entry.clientMtime);	
 	}
 	/**
@@ -117,10 +118,17 @@ public class EPubData {
 	public static Comparator<EPubData> EPubDataNameComparator = new Comparator<EPubData>() {
 
 		public int compare(EPubData ePub1, EPubData ePub2) {
-
-			String ePubName1 = ePub1.getTitle().toUpperCase();
-			String ePubName2 = ePub2.getTitle().toUpperCase();
-
+			
+			String ePubName1;
+			String ePubName2;
+			if(ePub1.getTitle().equals(EMPTY_STRING) || ePub2.getTitle().equals(EMPTY_STRING)){
+				 ePubName1 = ePub1.getFileName().toUpperCase();
+				 ePubName2 = ePub2.getFileName().toUpperCase();
+				
+			}else{	
+				 ePubName1 = ePub1.getTitle().toUpperCase();
+				 ePubName2 = ePub2.getTitle().toUpperCase();
+			}
 			// ascending order
 			return ePubName1.compareTo(ePubName2);
 

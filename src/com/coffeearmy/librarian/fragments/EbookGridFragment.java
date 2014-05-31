@@ -21,7 +21,7 @@ import com.coffeearmy.librarian.adapters.EpubListAdapter;
 import com.coffeearmy.librarian.data.EPubData;
 import com.coffeearmy.librarian.events.OnSuccessAuthorization;
 import com.coffeearmy.librarian.events.OttoBusHelper;
-import com.coffeearmy.librarian.rest.EpubLoader;
+import com.coffeearmy.librarian.loader.EPubLoader;
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.squareup.otto.Subscribe;
@@ -79,7 +79,7 @@ public class EbookGridFragment extends Fragment implements
 	// *** LOADER METHODS ****//
 	@Override
 	public Loader<List<EPubData>> onCreateLoader(int arg0, Bundle arg1) {
-		return new EpubLoader(getActivity(), mDropboxAPI);
+		return new EPubLoader(getActivity(), mDropboxAPI);
 	}
 
 	@Override

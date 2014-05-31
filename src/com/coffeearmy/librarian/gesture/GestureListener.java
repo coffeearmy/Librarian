@@ -9,7 +9,6 @@ GestureDetector.SimpleOnGestureListener {
 	
 	@Override
 	public boolean onDoubleTap(MotionEvent e) {
-		Log.d("tap", "id done **********");
 		return true;
 	}
 
