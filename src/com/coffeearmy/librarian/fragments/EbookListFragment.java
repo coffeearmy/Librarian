@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.coffeearmy.librarian.R;
 import com.coffeearmy.librarian.adapters.EpubListAdapter;
+import com.coffeearmy.librarian.data.EPubData;
 import com.coffeearmy.librarian.events.OnSuccessAuthorization;
 import com.coffeearmy.librarian.events.OttoBusHelper;
 import com.coffeearmy.librarian.rest.EpubLoader;
@@ -23,7 +24,7 @@ import com.dropbox.client2.android.AndroidAuthSession;
 import com.squareup.otto.Subscribe;
 
 public class EbookListFragment extends Fragment implements
-		LoaderCallbacks<List<Entry>> {
+		LoaderCallbacks<List<EPubData>> {
 
 	public static final String FRAGMENT_TAG = "ebook_fragment";
 	private static final int LOADER_EPUB_ID = 0;
@@ -43,7 +44,7 @@ public class EbookListFragment extends Fragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		ListView listEpubs = new ListView(getActivity());
-		mAdapterList= new EpubListAdapter(getActivity(), R.layout.item_epub_list, new ArrayList<DropboxAPI.Entry>());
+		mAdapterList= new EpubListAdapter(getActivity(), R.layout.item_epub_list, new ArrayList<EPubData>());
 		listEpubs.setAdapter(mAdapterList);
 		return listEpubs;
 	}
@@ -59,19 +60,19 @@ public class EbookListFragment extends Fragment implements
 	
 	//*** LOADER METHODS ****//
 	@Override
-	public Loader<List<Entry>> onCreateLoader(int arg0, Bundle arg1) {
+	public Loader<List<EPubData>> onCreateLoader(int arg0, Bundle arg1) {
 		return new EpubLoader(getActivity(),mDropboxAPI);
 	}
 
 	@Override
-	public void onLoadFinished(Loader<List<Entry>> arg0, List<Entry> arg1) {
-		mAdapterList.changeDataSet((ArrayList<Entry>) arg1);
+	public void onLoadFinished(Loader<List<EPubData>> arg0, List<EPubData> arg1) {
+		mAdapterList.changeDataSet((ArrayList<EPubData>) arg1);
 
 	}
 
 	@Override
-	public void onLoaderReset(Loader<List<Entry>> arg0) {
-		mAdapterList.changeDataSet(new ArrayList<Entry>());
+	public void onLoaderReset(Loader<List<EPubData>> arg0) {
+		mAdapterList.changeDataSet(new ArrayList<EPubData>());
 
 	}
 

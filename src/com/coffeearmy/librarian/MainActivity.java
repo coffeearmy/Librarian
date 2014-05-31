@@ -18,7 +18,7 @@ import com.dropbox.client2.session.Session.AccessType;
 public class MainActivity extends ActionBarActivity {
 
 	private FragmentManager mFragManager;
-	private DropboxAPI<AndroidAuthSession> mDBApi;
+	private static DropboxAPI<AndroidAuthSession> mDBApi;
 	final static private String APP_KEY = "l8bdlkx9jy53ow0";
 	final static private String APP_SECRET = "h3o4hidwfj0e36a";
 	final static private AccessType ACCESS_TYPE = AccessType.DROPBOX;
@@ -71,7 +71,7 @@ public class MainActivity extends ActionBarActivity {
 	    }
 	}
 	
-	
-
-
+	public static  DropboxAPI<AndroidAuthSession> getAPIDropbox(){
+		return mDBApi;
+	}
 }
