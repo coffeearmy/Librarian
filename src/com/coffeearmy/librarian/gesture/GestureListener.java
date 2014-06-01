@@ -1,9 +1,9 @@
 package com.coffeearmy.librarian.gesture;
 
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
+/** Simple Gesture Listener for cheking when the user double taps*/
 public class GestureListener extends
 GestureDetector.SimpleOnGestureListener {
 	

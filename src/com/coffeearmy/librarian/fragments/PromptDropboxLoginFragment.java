@@ -15,14 +15,15 @@ import com.coffeearmy.librarian.R;
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.session.AppKeyPair;
-import com.dropbox.client2.session.Session.AccessType;
 
+/** class for login in Dropbox and get permission from the user
+ *   This class is based in the Dropbox SDK official tutorial */
 public class PromptDropboxLoginFragment extends Fragment {
+
 	private static DropboxAPI<AndroidAuthSession> mDBApi;
 	private static Fragment mPrompFrag;
 	final static private String APP_KEY = "l8bdlkx9jy53ow0";
 	final static private String APP_SECRET = "h3o4hidwfj0e36a";
-	final static private AccessType ACCESS_TYPE = AccessType.DROPBOX;
 	public static final String FRAGMENT_TAG = "prompt_dropbox_login";
 	public static final String ACCOUNT_PREFS_NAME = "account_pref_name";
 	final static private String ACCESS_KEY_NAME = "ACCESS_KEY";
@@ -31,11 +32,12 @@ public class PromptDropboxLoginFragment extends Fragment {
 	private Button mBtnPromptLogin;
 
 	public static Fragment getInstance() {
-		if(mPrompFrag==null){
-			mPrompFrag=new PromptDropboxLoginFragment();
+		if (mPrompFrag == null) {
+			mPrompFrag = new PromptDropboxLoginFragment();
 		}
 		return mPrompFrag;
 	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class PromptDropboxLoginFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		//Prepare the session 
 		AndroidAuthSession session = buildSession();
 		mDBApi = new DropboxAPI<AndroidAuthSession>(session);
 	}
@@ -58,24 +60,6 @@ public class PromptDropboxLoginFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		loginLogic();
-	}
-
-	public static DropboxAPI<AndroidAuthSession> getAPIDropbox() {
-		return mDBApi;
-	}
-
-	public static void logOutDropbox() {
-		// Remove credentials from the session
-		mDBApi.getSession().unlink();
-	}
-
-	protected class OnClickPromptLogin implements View.OnClickListener {
-
-		@Override
-		public void onClick(View v) {
-			mDBApi.getSession().startOAuth2Authentication(getActivity());
-		}
-
 	}
 
 	private void loginLogic() {
@@ -88,7 +72,7 @@ public class PromptDropboxLoginFragment extends Fragment {
 
 				// Store it locally in our app for later use
 				storeAuth(session);
-				
+
 			} catch (IllegalStateException e) {
 				Log.i("DbAuthLog", "Error authenticating", e);
 			}
@@ -135,17 +119,35 @@ public class PromptDropboxLoginFragment extends Fragment {
 	}
 
 	private void successLogin() {
-		if(mDBApi.getSession().isLinked())
-		navigateToList();
+		//Only if the App is linked to Dropbox
+		if (mDBApi.getSession().isLinked())
+			navigateToList();
 	}
 
 	private void navigateToList() {
 		FragmentManager fm = getActivity().getSupportFragmentManager();
 		fm.beginTransaction()
-				.replace(R.id.fragment_container, EbookGridFragment.getInstance(),
-						EbookGridFragment.FRAGMENT_TAG)
-				.commit();
+				.replace(R.id.fragment_container,
+						EbookGridFragment.getInstance(),
+						EbookGridFragment.FRAGMENT_TAG).commit();
+	}
+	
+	protected class OnClickPromptLogin implements View.OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			mDBApi.getSession().startOAuth2Authentication(getActivity());
+		}
+
+	}
+	
+	public static DropboxAPI<AndroidAuthSession> getAPIDropbox() {
+		return mDBApi;
 	}
 
-	
+	public static void logOutDropbox() {
+		// Remove credentials from the session
+		mDBApi.getSession().unlink();
+	}
+
 }

@@ -26,6 +26,7 @@ import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.etsy.android.grid.StaggeredGridView;
 
+/** Shows ePubs data in a staggered grid view */
 public class EbookGridFragment extends Fragment implements
 		LoaderCallbacks<List<EPubData>> {
 
@@ -45,8 +46,8 @@ public class EbookGridFragment extends Fragment implements
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		//This fragment has options in the action bar
 		setHasOptionsMenu(true);
-	//	OttoBusHelper.getCurrentBus().register(this);
 		super.onCreate(savedInstanceState);
 	}
 
@@ -73,6 +74,13 @@ public class EbookGridFragment extends Fragment implements
 		inflater.inflate(R.menu.main, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
+	/** Adds a custom empty view to the gridview*/
+	private void onCreateEmptyView(StaggeredGridView grid, LayoutInflater inflater) {
+		View emptyView = inflater.inflate(R.layout.empty_view, null);
+		((ViewGroup) grid.getParent()).addView(emptyView, new LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		grid.setEmptyView(emptyView);
+	}
 
 	// *** LOADER METHODS ****//
 	@Override
@@ -92,7 +100,8 @@ public class EbookGridFragment extends Fragment implements
 		mAdapterList.changeDataSet(new ArrayList<EPubData>());
 
 	}
-
+	
+	//*** Menu Options behavior **//
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -121,6 +130,7 @@ public class EbookGridFragment extends Fragment implements
 		return super.onOptionsItemSelected(item);
 	}
 
+	/** Empty shared preferences with the dropbox info*/
 	private void clearKeys() {
 		SharedPreferences prefs = getActivity().getSharedPreferences(
 				PromptDropboxLoginFragment.ACCOUNT_PREFS_NAME, 0);
@@ -128,14 +138,5 @@ public class EbookGridFragment extends Fragment implements
 		edit.clear();
 		edit.commit();
 	}
-	
-	private void onCreateEmptyView(StaggeredGridView grid, LayoutInflater inflater) {
-		View emptyView = inflater.inflate(R.layout.empty_view, null);
-		((ViewGroup) grid.getParent()).addView(emptyView, new LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		grid.setEmptyView(emptyView);
-	}
-	
-
 	
 }

@@ -13,5 +13,6 @@
     <string name="btn_login_dropbox">Login Dropbox</string>
     <string name="action_menu_logout">Logout Dropbox</string>
     <string name="no_books">No ePubs found :(</string>
+    <string name="downloading">The cover is downloading right now, check later.</string>
 
 </resources>
