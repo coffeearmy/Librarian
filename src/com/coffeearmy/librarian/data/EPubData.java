@@ -4,11 +4,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Locale;
 
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 
 import com.dropbox.client2.DropboxAPI.Entry;
+import com.dropbox.client2.RESTUtility;
 
 /** Class used to store all the ePub fields */
 public class EPubData {
@@ -127,13 +129,10 @@ public class EPubData {
 	private Date dateToString(String d) {
 		// Dropbox format : "Sat, 21 Aug 2010 22:31:20 +0000"
 		Date dateParse = null;
-		SimpleDateFormat format = new SimpleDateFormat(
-				"E, dd MMM yyyy HH:mm:ss Z");
-
+		
 		try {
-			dateParse = format.parse(d);
-			System.out.println(date);
-		} catch (ParseException e) {
+			dateParse=RESTUtility.parseDate(d);
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (dateParse == null)
