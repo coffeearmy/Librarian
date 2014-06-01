@@ -26,6 +26,7 @@ import com.coffeearmy.librarian.events.OttoBusHelper;
 import com.coffeearmy.librarian.loader.EPubLoader;
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
+import com.etsy.android.grid.StaggeredGridView;
 import com.squareup.otto.Subscribe;
 
 public class EbookGridFragment extends Fragment implements
@@ -57,7 +58,7 @@ public class EbookGridFragment extends Fragment implements
 			Bundle savedInstanceState) {
 		View gridEpubView = (View) inflater.inflate(R.layout.grid_view_epubs,
 				null);
-		GridView gridEpub = (GridView) gridEpubView.findViewById(R.id.gridview);
+		StaggeredGridView gridEpub = (StaggeredGridView) gridEpubView.findViewById(R.id.grid_view);
 		mEPubList = new ArrayList<EPubData>();
 		mAdapterList = new EpubListAdapter(getActivity(),
 				R.layout.item_epub_grid, mEPubList);

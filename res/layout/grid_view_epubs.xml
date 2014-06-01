@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/gridview"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#e5e5e5"
-    android:horizontalSpacing="@dimen/element_margin"
-    android:numColumns="auto_fit"
-    android:padding="@dimen/element_margin"
-    android:verticalSpacing="@dimen/element_margin" >
+<com.etsy.android.grid.StaggeredGridView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+   android:id="@+id/grid_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:column_count="2"
+    app:item_margin="8dp"
+    app:column_count_landscape="3"
+    app:column_count_portrait="2" />
 
-</GridView>
