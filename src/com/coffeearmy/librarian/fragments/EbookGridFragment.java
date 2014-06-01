@@ -21,13 +21,10 @@ import android.view.ViewGroup.LayoutParams;
 import com.coffeearmy.librarian.R;
 import com.coffeearmy.librarian.adapters.EpubListAdapter;
 import com.coffeearmy.librarian.data.EPubData;
-import com.coffeearmy.librarian.events.OnSuccessAuthorization;
-import com.coffeearmy.librarian.events.OttoBusHelper;
 import com.coffeearmy.librarian.loader.EPubLoader;
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.etsy.android.grid.StaggeredGridView;
-import com.squareup.otto.Subscribe;
 
 public class EbookGridFragment extends Fragment implements
 		LoaderCallbacks<List<EPubData>> {
@@ -49,7 +46,7 @@ public class EbookGridFragment extends Fragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setHasOptionsMenu(true);
-		OttoBusHelper.getCurrentBus().register(this);
+	//	OttoBusHelper.getCurrentBus().register(this);
 		super.onCreate(savedInstanceState);
 	}
 
@@ -70,18 +67,6 @@ public class EbookGridFragment extends Fragment implements
 		return gridEpubView;
 	}
 
-	/**
-	 * Is subscribed to the event bus waiting for the onFinishAutentification
-	 * event to occur
-	 */
-	@Subscribe
-	public void onFinishAuthentification(OnSuccessAuthorization event) {
-		if (event.getType() == OnSuccessAuthorization.Type.SUCCESS) {
-			mDropboxAPI = PromptDropboxLoginFragment.getAPIDropbox();
-			getLoaderManager().initLoader(LOADER_EPUB_ID, null, this)
-					.forceLoad();
-		}
-	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

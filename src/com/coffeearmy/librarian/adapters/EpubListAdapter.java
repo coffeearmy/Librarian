@@ -181,7 +181,14 @@ public class EpubListAdapter extends ArrayAdapter<EPubData> {
 				
 				e.printStackTrace();
 			}
-
+			epub=null;
+			try {
+				file.deleteOnExit();
+			} catch (Exception e) {
+					e.printStackTrace();
+			} finally{
+				file.delete();
+			}
 			return viewHolder;
 		}
 
