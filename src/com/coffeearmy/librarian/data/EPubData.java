@@ -1,10 +1,7 @@
 package com.coffeearmy.librarian.data;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Locale;
 
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;

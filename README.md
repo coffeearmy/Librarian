@@ -54,3 +54,9 @@ For show the cover when the user double click in a book, we used a GestureDetect
 
 For order the items we provided comparators, one for the title and one for the date. If the ePub is already downloading we use the filename instead of the book title.
 
+**3. Considerations**
+Every time the user opens the app, downloads the Dropbox metadata and fill the item fields. Then in the adapter we download each ePub, this step takes so long but when the download is finish change the needed items fields. Other approach is let the items in the grid with only the Dropbox metadata info, and only download the ePub when the cover is needed. But this approach means that the items can't be ordered by ePub title. That is why we choose to download the ePubs in the beginning. 
+
+This app can be improved adding a BD and storing the downloading items, with this, we don't need to download every time the app opens. 
+
+
