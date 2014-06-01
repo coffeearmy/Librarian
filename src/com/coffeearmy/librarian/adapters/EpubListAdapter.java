@@ -150,7 +150,7 @@ public class EpubListAdapter extends ArrayAdapter<EPubData> {
 			Book epubBook=null;
 			try {
 				 epubBook = (new EpubReader())
-						.readEpub(new FileInputStream(file));			
+						.readEpubLazy(path, "UTF-8");			
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -16,7 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
+import android.view.ViewGroup.LayoutParams;
 
 import com.coffeearmy.librarian.R;
 import com.coffeearmy.librarian.adapters.EpubListAdapter;
@@ -59,6 +59,7 @@ public class EbookGridFragment extends Fragment implements
 		View gridEpubView = (View) inflater.inflate(R.layout.grid_view_epubs,
 				null);
 		StaggeredGridView gridEpub = (StaggeredGridView) gridEpubView.findViewById(R.id.grid_view);
+		onCreateEmptyView(gridEpub, inflater);
 		mEPubList = new ArrayList<EPubData>();
 		mAdapterList = new EpubListAdapter(getActivity(),
 				R.layout.item_epub_grid, mEPubList);
@@ -141,6 +142,13 @@ public class EbookGridFragment extends Fragment implements
 		Editor edit = prefs.edit();
 		edit.clear();
 		edit.commit();
+	}
+	
+	private void onCreateEmptyView(StaggeredGridView grid, LayoutInflater inflater) {
+		View emptyView = inflater.inflate(R.layout.empty_view, null);
+		((ViewGroup) grid.getParent()).addView(emptyView, new LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		grid.setEmptyView(emptyView);
 	}
 	
 

@@ -35,13 +35,13 @@ public class EPubLoader extends AsyncTaskLoader<List<EPubData>> {
 
 				// Aproach using search
 				List<Entry> ePubInDropbox = mDropboxAPI.search("/",
-						".epub", 0, true);
+						".epub", 0, false);
 				for (Entry entry : ePubInDropbox) {
 					if(!entry.mimeType.contains("ePub"));
 						mEpubsList.add(new EPubData(entry));
 				}
 			} catch (DropboxException e) {
-				// TODO Auto-generated catch block
+			
 				e.printStackTrace();
 			}
 

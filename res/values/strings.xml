@@ -12,5 +12,6 @@
     <string name="btn_login">Login</string>
     <string name="btn_login_dropbox">Login Dropbox</string>
     <string name="action_menu_logout">Logout Dropbox</string>
+    <string name="no_books">No ePubs found :(</string>
 
 </resources>

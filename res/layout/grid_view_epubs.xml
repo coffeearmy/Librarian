@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.etsy.android.grid.StaggeredGridView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-   android:id="@+id/grid_view"
+    android:id="@+id/parent_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:column_count="2"
-    app:item_margin="8dp"
-    app:column_count_landscape="3"
-    app:column_count_portrait="2" />
+    android:layout_height="match_parent" >
 
+    <com.etsy.android.grid.StaggeredGridView
+        android:id="@+id/grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:column_count="2"
+        app:column_count_landscape="3"
+        app:column_count_portrait="2"
+        app:item_margin="8dp" />
+
+</RelativeLayout>

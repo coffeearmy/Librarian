@@ -19,7 +19,7 @@
         <activity
             android:name="com.coffeearmy.librarian.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Base.AppCompat.Light.DarkActionBar" >
+            android:theme="@style/Theme.Base.AppCompat.Light.DarkActionBar" android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
