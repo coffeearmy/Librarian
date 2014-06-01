@@ -84,6 +84,7 @@ public class EbookGridFragment extends Fragment implements
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.main, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -141,4 +142,7 @@ public class EbookGridFragment extends Fragment implements
 		edit.clear();
 		edit.commit();
 	}
+	
+
+	
 }

@@ -35,13 +35,6 @@ public class MainActivity extends ActionBarActivity {
 				.replace(R.id.fragment_container, PromptDropboxLoginFragment.getInstance(),
 						PromptDropboxLoginFragment.FRAGMENT_TAG).commit();
 
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+	}	
 
 }

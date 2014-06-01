@@ -88,11 +88,12 @@ public class PromptDropboxLoginFragment extends Fragment {
 
 				// Store it locally in our app for later use
 				storeAuth(session);
-				successLogin();
+				
 			} catch (IllegalStateException e) {
 				Log.i("DbAuthLog", "Error authenticating", e);
 			}
 		}
+		successLogin();
 	}
 
 	private void storeAuth(AndroidAuthSession session) {
@@ -134,6 +135,7 @@ public class PromptDropboxLoginFragment extends Fragment {
 	}
 
 	private void successLogin() {
+		if(mDBApi.getSession().isLinked())
 		navigateToList();
 	}
 

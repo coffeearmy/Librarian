@@ -18,10 +18,16 @@
         </menu>
     </item>
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/overflowsettings"
         android:orderInCategory="100"
-        android:showAsAction="never"
-        yourapp:showAsAction="never"
-        android:title="@string/action_menu_logout"/>
+        
+         android:icon="@drawable/ic_action_overflow"
+        yourapp:showAsAction="always"
+        
+       android:title="@string/action_settings">
+        <menu>
+            <item android:id="@+id/action_settings" android:title="@string/action_menu_logout"/>
+        </menu>
+    </item>
 
 </menu>

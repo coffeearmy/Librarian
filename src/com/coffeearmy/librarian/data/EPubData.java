@@ -7,6 +7,7 @@ import java.util.Date;
 
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
+import android.text.format.Time;
 
 import com.dropbox.client2.DropboxAPI.Entry;
 
@@ -104,13 +105,16 @@ public class EPubData {
 	private Date dateToString(String d){
 		//Dropbox format : "Sat, 21 Aug 2010 22:31:20 +0000"
 		Date dateParse=null;
-		SimpleDateFormat  format = new SimpleDateFormat("E, d MMM yyyy HH:mm:ss Z");  
+		SimpleDateFormat  format = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z");
+		
 		try {  
 		    dateParse = format.parse(d);  
 		    System.out.println(date);  
 		} catch (ParseException e) {  
-		    // TODO Auto-generated catch block  
 		    e.printStackTrace();  
+		}finally{
+			if(dateParse==null)
+				dateParse= new Date();
 		}
 		return dateParse;
 	}
